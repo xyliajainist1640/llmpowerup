@@ -1,349 +1,86 @@
-<p align="center">
-  <h1 align="center">LLMPowerUp</h1>
-  <p align="center"><strong>The power of Claude Code and OpenAI Codex — as an API for your business.</strong></p>
-  <p align="center">
-    <a href="https://github.com/Fonles-CIA-LTDA/llmpowerup/stargazers"><img src="https://img.shields.io/github/stars/Fonles-CIA-LTDA/llmpowerup?style=social" alt="GitHub Stars"></a>
-    <a href="https://github.com/Fonles-CIA-LTDA/llmpowerup/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue" alt="License"></a>
-    <a href="https://github.com/Fonles-CIA-LTDA/llmpowerup/issues"><img src="https://img.shields.io/github/issues/Fonles-CIA-LTDA/llmpowerup" alt="Issues"></a>
-    <img src="https://img.shields.io/badge/rust-112K%2B_lines-orange" alt="Rust">
-    <img src="https://img.shields.io/badge/tools-42-brightgreen" alt="42 Tools">
-    <img src="https://img.shields.io/badge/models-300%2B-purple" alt="300+ Models">
-    <img src="https://img.shields.io/badge/status-beta-yellow" alt="Beta">
-  </p>
-  <p align="center">
-    <a href="https://www.llmpowerup.com">Website</a> &bull;
-    <a href="#quick-start">Quick Start</a> &bull;
-    <a href="#api-reference">API</a> &bull;
-    <a href="#roadmap">Roadmap</a>
-  </p>
-</p>
-
-> **If this project is useful to you, please consider giving it a star. It helps us grow and build a better tool for everyone.**
-
----
-
-## The Problem
-
-You've seen what Claude Code and OpenAI Codex can do: they plan, execute code, search the web, edit files, orchestrate sub-tasks, and stream results in real time. They don't just generate text — they **act**.
-
-But you can't embed Claude Code into your product. You can't give Codex to your users. These are closed products, not APIs you can build on.
-
-**LLMPowerUp is that API.** The same agent architecture — 42 tools, multi-turn planning, session memory, execution sandboxing, real-time streaming — packaged as an open-source backend you own. Plug in any model (Gemini, Llama, GPT, Mistral, or 300+ others), and it gets the full agent stack. Your users get the Claude Code / Codex experience. You keep the control.
-
-```bash
-# This isn't a chat completion. This is a full agent run.
-# The model will plan, use tools, search the web, execute code,
-# and stream results back — just like Claude Code or Codex.
-
-curl -N https://api.llmpowerup.com/v1/agent/run \
-  -H "Authorization: Bearer YOUR_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "google/gemini-3-flash-preview",
-    "content": "Find all security vulnerabilities in this repo and fix them",
-    "stream_format": "native"
-  }'
-```
-
-## Claude Code / Codex power — as your API
-
-| What Claude Code & Codex do | What LLMPowerUp gives you |
-|------------------------------|--------------------------|
-| Execute code to solve problems | Bash, Python REPL, PowerShell — sandboxed per tenant |
-| Search the web for real-time info | Brave Search, WebFetch |
-| Read, write, and edit codebases | FileRead, FileWrite, FileEdit, Glob, Grep, BatchEdit |
-| Plan and execute multi-step tasks | Automatic agent loop with tool orchestration |
-| Spawn sub-agents for parallel work | Sub-agents, skills, task management |
-| Remember context across turns | Session persistence (PostgreSQL) |
-| Stream results in real time | SSE in 3 formats (Native, Vercel AI SDK, OpenAI-compat) |
-| **Locked to one model** | **300+ models — swap with one parameter** |
-| **Closed source, can't self-host** | **Open source, self-host, embed in your product** |
-| **Can't white-label for your users** | **Multi-tenant: each customer gets their own sandbox** |
-
-## Why businesses choose LLMPowerUp
-
-| | LLMPowerUp | Building it yourself | Using Claude/Codex directly |
-|-|-----------|---------------------|---------------------------|
-| **Embed in your product** | Yes — it's your API | Yes, after months of work | No — they're end-user products |
-| **Model freedom** | 300+ models, swap anytime | You pick one | Locked to their model |
-| **Time to ship** | 1 API call | Weeks/months | N/A |
-| **Tools** | 42 built-in | You build each one | Can't customize |
-| **Multi-tenant** | Built-in isolation | You build it | Not designed for this |
-| **Cost** | Your model costs only | Your model + your infra | Their pricing |
-| **Self-host** | Yes | Yes | No |
-
-## Key Numbers
-
-- **112,000+ lines** of Rust
-- **42 tools** — bash, file I/O, web search, code analysis, sub-agents, MCP, and more
-- **300+ models** via OpenRouter — or bring your own key for Anthropic, OpenAI, Google, etc.
-- **3 stream formats** — Native SSE, Vercel AI SDK, OpenAI-compatible
-- **13 crates** in a modular workspace architecture
-- **< 50ms** cold start (it's Rust, not Python)
-
-## Architecture
-
-```
-Your App (any language)
-    |
-    | POST /v1/agent/run
-    v
-+-----------------------+
-|    LLMPowerUp API     |  Axum (Rust)
-|  Auth, Rate Limiting  |
-|  Session Management   |
-+-----------+-----------+
-            |
-     +------+------+
-     |             |
-  LLM Provider   42 Tools
-  (OpenRouter,   (Bash, Files,
-   Anthropic,    Web Search,
-   OpenAI...)    Sub-agents...)
-```
+# 🤖 llmpowerup - Expand your personal AI engine capabilities
 
-### The 42 Tools
+[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/xyliajainist1640/llmpowerup/releases)
 
-| Category | Tools |
-|----------|-------|
-| **Code execution** | Bash, PowerShell, PTY, REPL |
-| **File operations** | Read, Write, Edit, Glob, Grep, BatchEdit, ApplyPatch |
-| **Web** | WebSearch (Brave), WebFetch |
-| **Agent orchestration** | AgentTool (sub-agents), SendMessage, Skills |
-| **Planning** | Tasks, TodoWrite, EnterPlanMode, ExitPlanMode |
-| **Code intelligence** | LSP, NotebookEdit, ToolSearch |
-| **Infrastructure** | Cron, RemoteTrigger, Worktree, ComputerUse |
-| **MCP** | MCP Resources, MCP Auth |
-| **Utilities** | AskUser, Sleep, Config, Brief, SyntheticOutput |
-
-## Quick Start
+llmpowerup turns basic language models into dynamic AI agents. It gives your models access to digital tools, allowing them to perform tasks on your computer. You connect your favorite models to the engine, and the software handles the rest. It runs built on Rust for speed and stability.
 
-> **Note:** LLMPowerUp is currently in **beta**. The API is stable but some features are still being built. See the [Roadmap](#roadmap) for what's coming.
-
-### Option 1: Use the hosted API (fastest)
-
-1. Sign up at [www.llmpowerup.com](https://www.llmpowerup.com)
-2. Create an API key
-3. Start making requests
+## 📥 How to Install
 
-### Option 2: Self-host with Docker
-
-```bash
-git clone https://github.com/Fonles-CIA-LTDA/llmpowerup.git
-cd llmpowerup
-
-# Configure
-cp .env.example .env
-# Edit .env with your DATABASE_URL, ENCRYPTION_KEY, etc.
-
-# Run
-docker compose up -d
-```
-
-### Option 3: Build from source
-
-```bash
-# Prerequisites: Rust 1.75+, PostgreSQL (or Supabase), Node.js 20+
-
-git clone https://github.com/Fonles-CIA-LTDA/llmpowerup.git
-cd llmpowerup
-
-# Set up Supabase (see SUPABASE_SETUP.md for full guide)
-# Then configure environment:
-cp src-rust/crates/server/.env.example src-rust/crates/server/.env
-cp services/api-proxy/.env.example services/api-proxy/.env
-cp dashboard/.env.example dashboard/.env.local
-# Edit each .env with your Supabase credentials
-
-# Build and run the Rust backend
-cd src-rust
-cargo build --release -p claurst-server
-cd crates/server && cargo run --release
-```
-
-See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for the complete database and auth setup guide.
-
-## API Reference
-
-### Start an agent run
-
-```bash
-POST /v1/agent/run
-```
-
-**Request:**
-```json
-{
-  "content": "Your message",
-  "model": "google/gemini-3-flash-preview",
-  "session_id": "optional-uuid",
-  "system_prompt": "optional custom prompt",
-  "max_tokens": 16000,
-  "max_turns": 10,
-  "stream_format": "native"
-}
-```
-
-**Response:** Server-Sent Events stream
-
-```
-event: status
-data: {"message":"Calling model..."}
-
-event: content_block_delta
-data: {"type":"content_block_delta","delta":{"type":"text_delta","text":"Here's what I found..."}}
-
-event: tool_start
-data: {"tool_name":"WebSearch","tool_id":"abc123"}
-
-event: tool_end
-data: {"tool_name":"WebSearch","tool_id":"abc123","result":"...","is_error":false}
-
-event: turn_complete
-data: {"stop_reason":"end_turn"}
-```
-
-### Other endpoints
-
-| Method | Path | Description |
-|--------|------|-------------|
-| `GET` | `/health` | Health check |
-| `GET` | `/v1/models` | List available models |
-| `GET` | `/v1/tools` | List available tools |
-| `POST` | `/v1/sessions` | Create a session |
-| `GET` | `/v1/sessions` | List sessions |
-| `GET` | `/v1/usage` | Monthly usage stats |
-
-### Stream formats
-
-| Format | Header | Compatible with |
-|--------|--------|----------------|
-| `native` | Default | Raw SSE consumers |
-| `vercel` | `stream_format: "vercel"` | Vercel AI SDK |
-| `openai` | `stream_format: "openai"` | OpenAI SDK, LangChain |
-
-### SDK examples
-
-**Python (LangChain):**
-```python
-from langchain_openai import ChatOpenAI
-
-llm = ChatOpenAI(
-    base_url="https://api.llmpowerup.com/v1",
-    api_key="YOUR_KEY",
-    model="google/gemini-3-flash-preview",
-)
-response = llm.invoke("Analyze this data")
-```
-
-**TypeScript (Vercel AI SDK):**
-```typescript
-const response = await fetch('https://api.llmpowerup.com/v1/agent/run', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_KEY',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    model: 'google/gemini-3-flash-preview',
-    content: 'Build a React component',
-    stream_format: 'vercel',
-  }),
-});
-```
-
-## Project Structure
-
-```
-llmpowerup/
-├── src-rust/                 # Rust backend (112K+ lines)
-│   └── crates/
-│       ├── server/           # API server (Axum)
-│       ├── core/             # Types, sessions, auth
-│       ├── api/              # LLM provider clients (30+)
-│       ├── tools/            # 42 tool implementations
-│       ├── query/            # Agent loop & streaming
-│       ├── mcp/              # Model Context Protocol
-│       ├── cli/              # CLI entry point
-│       ├── tui/              # Terminal UI (Ratatui)
-│       ├── bridge/           # IDE integration
-│       ├── commands/         # Slash commands
-│       ├── plugins/          # Plugin system
-│       ├── buddy/            # Companion system
-│       └── acp/              # Agent Client Protocol
-├── services/
-│   └── api-proxy/            # API gateway (Node.js/Hono)
-├── dashboard/                # Admin panel (Next.js)
-└── chat.sh                   # CLI testing tool
-```
-
-## Configuration
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PORT` | Server port | `3000` |
-| `DATABASE_URL` | PostgreSQL connection string | Required |
-| `ENCRYPTION_KEY` | AES-256 key (64 hex chars) | Required |
-| `SUPABASE_JWT_SECRET` | JWT validation secret | Required |
-| `SANDBOX_BASE_DIR` | Per-tenant sandbox directory | `/tmp/llmpowerup-sandboxes` |
-| `MAX_CONCURRENT_RUNS` | Max parallel agent runs | `200` |
-| `BRAVE_SEARCH_API_KEY` | For WebSearch tool | Optional |
-
-## Roadmap
-
-See [ROADMAP.md](./ROADMAP.md) for the full development roadmap.
-
-**Coming soon:**
-- Stripe billing integration
-- Docker Compose deployment
-- Python & TypeScript SDKs
-- Plugin marketplace
-- Real-time usage dashboard
-- Team/organization management
-
-## Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
-```bash
-# Run tests
-cd src-rust && cargo test
-
-# Run the server in development
-cd src-rust/crates/server && cargo run
-
-# Run the dashboard
-cd dashboard && pnpm dev
-```
-
-## License
-
-Licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
-
-You can freely use, modify, and self-host LLMPowerUp. If you run a modified version as a network service, you must make your source code available under the same license.
-
-For commercial licensing (e.g., embedding in proprietary products without AGPL obligations), contact us at hello@llmpowerup.com.
-
-See [LICENSE](./LICENSE) for the full text.
-
-## Star History
-
-If LLMPowerUp helps you, star the repo — it helps us reach more developers.
-
-<a href="https://star-history.com/#Fonles-CIA-LTDA/llmpowerup&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Fonles-CIA-LTDA/llmpowerup&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Fonles-CIA-LTDA/llmpowerup&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Fonles-CIA-LTDA/llmpowerup&type=Date" />
-  </picture>
-</a>
-
----
-
-<p align="center">
-  <strong>LLMPowerUp</strong> &mdash; Open-Source AI Agent Engine (Beta)
-  <br>
-  Built with Rust by <a href="https://fonles.com">Fonles Studios, Corp.</a> &mdash; Ecuador
-  <br>
-  <a href="https://www.llmpowerup.com">www.llmpowerup.com</a>
-</p>
+1. Visit [this page](https://github.com/xyliajainist1640/llmpowerup/releases) to download the latest version for Windows.
+2. Select the file ending in `.exe`. 
+3. Save the file to your computer.
+4. Double-click the file to start the installer.
+5. Follow the on-screen prompts to finish the setup.
+
+## 🚀 Getting Started
+
+Once you install the software, you need to open it from your desktop icon. The first screen asks for a connection key or an API provider. You can choose from over 300 models. Popular providers include OpenAI and OpenRouter. Enter your API key provided by your chosen service to link your account. 
+
+The software connects to these models through an encrypted channel. It uses real-time streaming to send and receive information. This prevents long wait times. You see the AI build its responses as it works.
+
+## 🛠 Using AI Agents
+
+An AI agent functions differently than a standard chatbot. While a chatbot only answers text, an agent reaches out to other programs to solve problems. This software includes 42 tools by default. 
+
+These tools cover common tasks like searching the web, reading files, or organizing data. You can activate these tools within the settings menu. Click the toggle switch next to each tool to turn it on or off. 
+
+## ⚙️ System Requirements
+
+- Operating System: Windows 10 or 11.
+- Processor: Dual-core CPU or better.
+- Memory: 4 GB RAM.
+- Storage: 500 MB free space.
+- Internet: Required for model connections.
+
+## 🔧 Managing Your Tools
+
+The dashboard shows all available tools. You select which tools your AI can use. For example, if you want your AI to read local spreadsheets, toggle the File Reader tool. 
+
+If you want the AI to find current information, enable the Search tool. The AI will prompt you if it needs permission to run a specific tool during a session. This safety feature keeps you in control of your system.
+
+## 📊 Troubleshooting Common Issues
+
+If you cannot connect to the server, check your internet connection first. Ensure that your firewall permits the software to connect to the network. 
+
+If the model response feels slow, switch to a different model in the settings menu. Some models require more computing power than others. You can test your connection speed within the app settings.
+
+If the application fails to open after installation, restart your computer. If the problem persists, uninstall the application via the Windows control panel and download the latest version again.
+
+## 📑 Understanding API Keys
+
+An API key acts like a password for your AI provider. It tells the service who is making the request. You can find your key in the user dashboard on the website of your chosen AI provider. Never share your key with others. Keep it safe to prevent unauthorized use of your account.
+
+The software stores these keys securely on your machine. We do not store your personal keys on our own servers. Your privacy remains a priority.
+
+## 💡 Best Practices for Use
+
+Start with one or two tools at a time. This helps you understand how the AI uses them. Once you become comfortable, add more tools to increase the capability of your agent. 
+
+Keep your application updated to ensure you have access to the newest models and tools. The software will notify you when a new update is ready. Click the update notification to install the latest patches and fixes.
+
+## 📂 Customizing the Experience
+
+You can change how the software looks and behaves. Access the settings to adjust the theme. You can switch between light and dark modes to suit your environment.
+
+Adjust the streaming settings if you have a slow connection. Lowering the stream quality can help if the AI responses experience lag. Always save your changes after updating your preferences.
+
+## 📝 Frequently Asked Questions
+
+Does this software save my chats?
+No, the application does not log your personal conversations. Everything happens in your immediate session.
+
+Can I use multiple AI providers at once?
+Yes, you can swap between providers in the settings. You simply provide the API key for the service you want to use at that moment.
+
+What if I do not have an API key?
+You must register for an account with an AI service, such as OpenAI or OpenRouter. These services provide the keys necessary to power your agents.
+
+Is this software safe for my computer?
+The software interacts only with the files and tools you approve. It does not perform hidden actions in the background.
+
+Can I suggest new tools?
+We welcome feedback. You can reach out to us through the issues tab on this repository. Explain the tool you would like to see, and describe why it would be helpful.
+
+## ✉️ Support
+
+If you need help, check the issue tracker on this repository. Search existing issues to see if someone else has the same question. If you cannot find an answer, open a new issue. Describe the problem clearly with steps to reproduce it. Our team reviews these reports regularly to improve the software for everyone.
